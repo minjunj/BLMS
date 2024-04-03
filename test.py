@@ -1,5 +1,5 @@
 import autochord
-autochord.recognize('audio.wav', lab_fn='chords.lab')
+autochord.recognize('source/wilight.wav', lab_fn='chords.lab')
 # This gives out a list of tuples in the format:
 #  (chord start, chord end, chord name)
 # e.g.
