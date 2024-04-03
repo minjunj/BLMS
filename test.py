@@ -1,5 +1,5 @@
 import autochord
-autochord.recognize('source/soware.wav', lab_fn='source/soware.lab')
+autochord.recognize('source/dont_lazy.wav', lab_fn='source/dont_lazy.lab')
 # This gives out a list of tuples in the format:
 #  (chord start, chord end, chord name)
 # e.g.
