@@ -33,14 +33,11 @@ def record_audio(device_index, duration=10, sample_rate=44100):
     """
     try:
         device_info = sd.query_devices(device_index)
-        print(f"Recording for {duration} seconds using device: {device_info['name']} with {2} channels...")
         audio_data = sd.rec(int(duration * sample_rate), samplerate=sample_rate, channels=2, device=device_index, dtype='float32')
         sd.wait()  # Wait until recording is finished
-        print("Recording done.")
         # Save recorded data as a WAV file
         output_file = 'recode/output.wav'
         sf.write(output_file, audio_data, sample_rate)
-        print(f"Audio saved as {output_file}")  
     except Exception as e:
         print(f"An error occurred: {e}")
         st.error(f'An error occurred: {e}')
@@ -58,21 +55,26 @@ with st.container(border=True):
         (ele.keys()))
 
         time_duration = st.slider("How long recode?", 0, 20, 10)
-        
-        if st.button("Recode"):
-            with st.spinner('Wait for it...'):
+        col1, col2 = st.columns([0.2, 1.4])
+        with col1:
+            if st.button("Recode"):
+                st.session_state["Recode"] = True
+        with col2:
+            if st.button("Save"):
+                st.session_state["Save"] = True
+        if 'Recode' in st.session_state and st.session_state['Recode']:
+            with st.spinner('recording...'):
                 time.sleep(1)
-                record_audio(ele.get(input_option), duration=10, sample_rate=44100)
+                record_audio(ele.get(input_option), duration=time_duration, sample_rate=44100)
+                st.audio("recode/output.wav", format="audio/mpeg", loop=False)
+                st.session_state['Recode'] = False
+        if 'Save' in st.session_state and st.session_state['Save']:
+            st.write("Shot Auto Chord")
+            st.success('This is a success message!')
+            st.session_state['Save'] = False
     except:
         pass
 
-st.write(f"You selected input device :{ele.get(input_option)}")
-st.write(f"You selected output device :{output_option}")
-st.write(time_duration, "second")
-
-
-# # List devices to find the correct one
-# list_devices()
-
-# # Use the correct device index from the list, e.g., 3 for Scarlett Solo
-# record_audio(3)
+# st.write(f"You selected input device :{ele.get(input_option)}")
+# st.write(f"You selected output device :{output_option}")
+# st.write(time_duration, "second")
