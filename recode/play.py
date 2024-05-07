@@ -36,7 +36,7 @@ def record_audio(device_index, duration=10, sample_rate=44100):
         audio_data = sd.rec(int(duration * sample_rate), samplerate=sample_rate, channels=2, device=device_index, dtype='float32')
         sd.wait()  # Wait until recording is finished
         # Save recorded data as a WAV file
-        output_file = 'recode/output.wav'
+        output_file = 'recoded/output.wav'
         sf.write(output_file, audio_data, sample_rate)
     except Exception as e:
         print(f"An error occurred: {e}")
@@ -66,7 +66,7 @@ with st.container(border=True):
             with st.spinner('recording...'):
                 time.sleep(1)
                 record_audio(ele.get(input_option), duration=time_duration, sample_rate=44100)
-                st.audio("recode/output.wav", format="audio/mpeg", loop=False)
+                st.audio("recoded/output.wav", format="audio/mpeg", loop=False)
                 st.session_state['Recode'] = False
         if 'Save' in st.session_state and st.session_state['Save']:
             st.write("Shot Auto Chord")
