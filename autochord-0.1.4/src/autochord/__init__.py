@@ -11,6 +11,11 @@ import vamp
 import lazycats.np as catnp
 from tensorflow import keras
 
+import autochord
+import math
+import time
+
+start = time.time()
 
 _CHROMA_VAMP_LIB = pkg_resources.resource_filename('autochord', 'res/nnls-chroma.so')
 _CHROMA_VAMP_KEY = 'nnls-chroma:nnls-chroma'
@@ -54,22 +59,22 @@ def _setup_chroma_vamp():
     print(f'autochord WARNING: NNLS-Chroma VAMP plugin not setup properly. '
           f'Try copying `{_CHROMA_VAMP_LIB}` in any of following directories: {vamp_paths}')
 
-def _download_model():
-    os.makedirs(_EXT_RES_DIR, exist_ok=True)
-    model_zip = os.path.join(_EXT_RES_DIR, 'model.zip')
-    gdown.download(_CHORD_MODEL_URL, model_zip, quiet=False)
+# def _download_model():
+#     os.makedirs(_EXT_RES_DIR, exist_ok=True)
+#     model_zip = os.path.join(_EXT_RES_DIR, 'model.zip')
+#     gdown.download(_CHORD_MODEL_URL, model_zip, quiet=False)
 
-    model_files = gdown.extractall(model_zip)
-    model_files.sort()
-    os.remove(model_zip)
-    print(f'autochord: Chord model downloaded in {model_files[0]}')
-    return model_files[0]
+#     model_files = gdown.extractall(model_zip)
+#     model_files.sort()
+#     os.remove(model_zip)
+#     print(f'autochord: Chord model downloaded in {model_files[0]}')
+#     return model_files[0]
 
 def _load_model():
     global _CHORD_MODEL_DIR, _CHORD_MODEL
     try:
-        if not os.path.exists(_CHORD_MODEL_DIR):
-            _CHORD_MODEL_DIR = _download_model()
+        #if not os.path.exists(_CHORD_MODEL_DIR):
+        _CHORD_MODEL_DIR = '/home/user/ground/BLMS/chroma-seq-bilstm-crf-v1'#_download_model()
 
         _CHORD_MODEL = keras.models.load_model(_CHORD_MODEL_DIR)
         print(f'autochord: Loaded model from {_CHORD_MODEL_DIR}')
@@ -77,13 +82,15 @@ def _load_model():
         raise Exception(f'autochord: Error in loading model: {e}')
 
 def _init_module():
-    print('autochord: Initializing...')
+    print('autochord: Local Initializing...')
     _setup_chroma_vamp()
     _load_model()
 
 _init_module()
 
+end = time.time()
 
+print(f"{end - start:.5f} sec")
 #################
 # Core Functions
 #################
