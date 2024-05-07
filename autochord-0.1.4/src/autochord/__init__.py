@@ -74,7 +74,7 @@ def _load_model():
     global _CHORD_MODEL_DIR, _CHORD_MODEL
     try:
         #if not os.path.exists(_CHORD_MODEL_DIR):
-        _CHORD_MODEL_DIR = '/home/user/ground/BLMS/chroma-seq-bilstm-crf-v1'#_download_model()
+        _CHORD_MODEL_DIR = '/app/chroma-seq-bilstm-crf-v1'#_download_model()
 
         _CHORD_MODEL = keras.models.load_model(_CHORD_MODEL_DIR)
         print(f'autochord: Loaded model from {_CHORD_MODEL_DIR}')
