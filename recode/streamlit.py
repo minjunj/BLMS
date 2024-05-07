@@ -6,7 +6,7 @@ from st_pages import Page, Section, show_pages, add_page_title
 #side bar part refer https://github.com/blackary/st_pages
 # add_page_title()
 
-st.title('''Welcome Group 4's World!''')
+st.title('''BLMS''')
 
 
 # Display the image, which should be centered with the CSS above
