@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import numpy as np
 from st_pages import Page, Section, show_pages, add_page_title
 
 #side bar part refer https://github.com/blackary/st_pages
